@@ -1,29 +1,19 @@
-//your JS code here. If required.
-function manipulateData(arr) {
-  return new Promise(resolve => {
-    setTimeout(() => {
-      resolve(arr);
-    }, 3000);
-  })
-  .then(arr => {
-    const filteredArr = arr.filter(num => num % 2 === 0);
-    return new Promise(resolve => {
+function getNumbers() {
+    return new Promise((resolve, reject) => {
       setTimeout(() => {
-        resolve(filteredArr);
-      }, 1000);
+        resolve([1, 2, 3, 4]);
+      }, 3000);
     });
-  })
-  .then(arr => {
-    const mappedArr = arr.map(num => num * 2);
-    return new Promise(resolve => {
-      setTimeout(() => {
-        resolve(mappedArr);
-      }, 2000);
-    });
-  })
-}
+  }
 
-manipulateData([1, 2, 3, 4])
-  .then(resultArr => {
-    document.getElementById("output").innerText = resultArr.join(", ");
-  });
+  // Chain the promise with filters out odd numbers and multiply even numbers by 2
+  getNumbers()
+    .then(numbers => numbers.filter(number => number % 2 === 0))
+    .then(numbers => numbers.map(number => number * 2))
+    .then(numbers => {
+      // Print the array in the div with the id of "output" after 2 seconds
+      setTimeout(() => {
+        document.getElementById("output").textContent = numbers.join(", ");
+      }, 2000);
+    })
+    .catch(error => console.log(error));
