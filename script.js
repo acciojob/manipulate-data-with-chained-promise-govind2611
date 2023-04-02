@@ -1,19 +1,28 @@
-function getNumbers() {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve([1, 2, 3, 4]);
-      }, 3000);
+const arr = [1, 2, 3, 4];
+function promise(arr, time) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(arr);
+    }, time);
+  });
+}
+const op = document.getElementById("output");
+promise(arr, 3000)
+  .then((res) => {
+    const evenArr = res.filter((num) => {
+      return num % 2 === 0;
     });
-  }
+    return promise(evenArr, 1000);
+  })
+  .then((res) => {
+    
+    op.innerText = res;
+    const multiplyBy2 = res.map((num) => {
+      return num * 2;
+    });
 
-  // Chain the promise with filters out odd numbers and multiply even numbers by 2
-  getNumbers()
-    .then(numbers => numbers.filter(number => number % 2 === 0))
-    .then(numbers => numbers.map(number => number * 2))
-    .then(numbers => {
-      // Print the array in the div with the id of "output" after 2 seconds
-      setTimeout(() => {
-        document.getElementById("output").textContent = numbers.join(", ");
-      }, 2000);
-    })
-    .catch(error => console.log(error));
+    return promise(multiplyBy2, 2000);
+  })
+  .then((res) => {
+    op.innerText = res;
+  });
