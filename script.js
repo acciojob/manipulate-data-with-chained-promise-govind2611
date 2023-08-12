@@ -1,4 +1,4 @@
-const arr = [1, 2, 3, 4];
+ const arr = [1, 2, 3, 4];
 function promise(arr, time) {
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -15,7 +15,7 @@ promise(arr, 3000)
     return promise(evenArr, 1000);
   })
   .then((res) => {
-    
+
     op.innerText = res;
     const multiplyBy2 = res.map((num) => {
       return num * 2;
